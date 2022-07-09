@@ -7,7 +7,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 
 /* Full-width input fields */
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=number], input[type=email] {
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
@@ -17,7 +17,7 @@ input[type=text], input[type=password] {
 }
 
 /* Add a background color when the inputs get focus */
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus , input[type=number]:focus , input[type=email]:focus{
   background-color: #ddd;
   outline: none;
 }
@@ -136,11 +136,11 @@ hr {
 
       <input type="text" placeholder="Last Name" name="lastName" id="lastName" required>
 
-      <input type="text" placeholder="Email" name="emailId" id="emailId" required>
+      <input type="email" placeholder="Email" name="emailId" id="emailId" required>
 
-      <input type="password" placeholder="Password" name="password" maxlength="8" id="password" required>
+      <input type="password" placeholder="Password* (Atlist 8 chracters)" name="password" maxlength="8" id="password" required>
 
-      <input type="text" placeholder="Phone Number" name="phoneNo"  id="phoneNo" required>
+      <input type="number" placeholder="Phone Number* (Must be 10 digit)" maxlength="10" name="phoneNo"  id="phoneNo" required>
       
       <label>
         <input type="checkbox"  name="subscribe"  id="subscribe" style="margin-bottom:15px"> Subscribe to our news letter
@@ -180,18 +180,22 @@ $(document).ready(function () {
         processData: false,
         success: function( data, textStatus, jQxhr ){
           $(".loader").css({display: "none"});
-          if ($('#subscribe').is(":checked")) {
-            var msg = "Hello "+$("#firstName").val()+ " " + $("#lastName").val() + ", Thank you for signing up. Your account is now created. You would be receiving our periodic newsletters to your email: " +  $("#emailId").val();
-            alert(msg);
+            if(data.code==200){
+                if ($('#subscribe').is(":checked")) {
+                var msg = "Hello "+$("#firstName").val()+ " " + $("#lastName").val() + ", Thank you for signing up. Your account is now created. You would be receiving our periodic newsletters to your email: " +  $("#emailId").val();
+                alert(msg);
+              } else {
+                var msg = "Hello "+$("#firstName").val()+ " " + $("#lastName").val() + ", Thank you for signing up. Your account is now created";
+                alert(msg);
+              }
+            $("#firstName").val("");
+            $("#lastName").val("");
+            $("#emailId").val("");
+            $("#password").val("");
+            $("#phoneNo").val("");
           } else {
-            var msg = "Hello "+$("#firstName").val()+ " " + $("#lastName").val() + ", Thank you for signing up. Your account is now created";
-            alert(msg);
+            alert(JSON.stringify(data.message))
           }
-         $("#firstName").val("");
-         $("#lastName").val("");
-         $("#emailId").val("");
-         $("#password").val("");
-         $("#phoneNo").val("");
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );

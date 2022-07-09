@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var url = "mongodb://localhost:27017/userdb";
+var url = "mongodb://localhost:27017/userdb1";
 
 mongoose.connect(url,{useNewUrlParser:true},function(err,success){
     if(err)

@@ -7,8 +7,8 @@ exports.createUser = async(req,res)=>{
     try {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(req.body.password, salt);
-        req.body.password = hash;
         var reqquestBody = new userModel(req.body);
+        req.body.password = hash;
         reqquestBody.save(function(err,success){
             if(err)
                 res.json({
@@ -19,7 +19,7 @@ exports.createUser = async(req,res)=>{
             else
                 res.json({
                     message : "User's data saved successfully.",
-                    statusCode : 200,
+                    code : 200,
                     status : "success"
                 })
         })        
