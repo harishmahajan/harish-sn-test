@@ -126,8 +126,6 @@ hr {
 </style>
 <body>
 
-<h2>Modal Signup Form</h2>
-
 <div id="id01" class="modal">
   <form class="modal-content" method="post" action="#">
     <div class="container">
@@ -145,13 +143,13 @@ hr {
       <input type="text" placeholder="Phone Number" name="phoneNo"  id="phoneNo" required>
       
       <label>
-        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Subscribe to our news letter
+        <input type="checkbox"  name="subscribe"  id="subscribe" style="margin-bottom:15px"> Subscribe to our news letter
       </label>
 
-      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+      <p>By clicking Signup you agree to our <a href="#" style="color:dodgerblue">terms of service</a>.</p>
 
       <div class="clearfix">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="button" class="cancelbtn">Cancel</button>
         <button type="submit" class="signupbtn">Sign Up</button>
       </div>
     </div>
@@ -182,7 +180,13 @@ $(document).ready(function () {
         processData: false,
         success: function( data, textStatus, jQxhr ){
           $(".loader").css({display: "none"});
-          alert(data.message);
+          if ($('#subscribe').is(":checked")) {
+            var msg = "Hello "+$("#firstName").val()+ " " + $("#lastName").val() + ", Thank you for signing up. Your account is now created. You would be receiving our periodic newsletters to your email: " +  $("#emailId").val();
+            alert(msg);
+          } else {
+            var msg = "Hello "+$("#firstName").val()+ " " + $("#lastName").val() + ", Thank you for signing up. Your account is now created";
+            alert(msg);
+          }
          $("#firstName").val("");
          $("#lastName").val("");
          $("#emailId").val("");
