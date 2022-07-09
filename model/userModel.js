@@ -7,7 +7,7 @@ var userSchema = Joi.object({
     emailId : Joi.string().email().required(),
     lastName : Joi.string().min(3).max(30).required(),
     password : Joi.string().min(8).max(100),
-    phoneNo : Joi.string().required()
+    phoneNo : Joi.number()
 });
 
 var user = new Mongoose.Schema(Joigoose.convert(userSchema));
